@@ -1,4 +1,3 @@
 target/
 *.csv
 notes.txt
-Cargo.lock
