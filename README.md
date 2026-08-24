@@ -2,16 +2,14 @@
 
 A **standalone** Rust microbenchmark (independent of the lind-wasm repo) comparing the performance of the proposed 3i syscall-dispatch / policy-enforcement designs:
 
-| Option | What the design doc proposes | Scenario group here |
+| Option | What the design doc proposes |
 |---|---|---|
-| Option 1 | Parent grate registers all syscalls for its children; policy lives entirely in the grate | **C** (real wasm grates through the wasmtime trampoline) |
-| Option 2a | Hierarchy policy fixed inside 3i (a cage may only reference its own subtree) | `2a subtree-*` in **B1** / **B** |
-| Option 2b | 2a, but grates can change the policy via a syscall | `2b grants-*` in **B1** / **B**, grant/revoke in **E** |
-| Option 2c | 3i supports eBPF-style allow/block filters | `2c ebpf: *` in **B**, verifier in **E** |
-| Option 3 | `register_handler` stores arg_cageids; `make_syscall` shrinks to 7 args | **D** |
+| Option 1 | Parent grate registers all syscalls for its children; policy lives entirely in the grate |
+| Option 2a | Hierarchy policy fixed inside 3i (a cage may only reference its own subtree) |
+| Option 2b | 2a, but grates can change the policy via a syscall |
+| Option 2c | 3i supports eBPF-style allow/block filters |
+| Option 3 | `register_handler` stores arg_cageids; `make_syscall` shrinks to 7 args |
 
-Two cross-cutting groups round it out: **A** = raw handler-table lookup cost for the three
-backends, **F** = handler-table contention under multiple threads.
 
 ## Why these numbers can be trusted
 
